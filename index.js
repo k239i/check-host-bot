@@ -11,7 +11,7 @@ client.on('message', m => {
   if(!m.content.match(/https?:\/\//)) host = {
     hostname: _url
   };
-  const sbp = cp.fork(__dirname+'/get_ip.js');
+  const sbp = cp.fork(__dirname+'/get_ip.js', { stdio: [0, 1, 2, 'ipc'] });
   sbp.send(host);
   console.log(sbp)
   sbp.stdout.on("data", (data) => {
@@ -36,7 +36,7 @@ client.on('ready',() => {
   setInterval(() => {
     client.user.setActivity('checked ' + checked + ' hosts.', { type: 'PLAYING' })
     setTimeout(() => {
-      client.user.setActivity('@check-host#5362 https://google.com\n@check-host#5362 bing.com', { type: 'WATCHING' })
+      client.user.setActivity('@check-host#5362 https://google.com\n@check-host#5362 bing.com', { type: 'PLAYING' })
     },3000);
   },6000);
 })
