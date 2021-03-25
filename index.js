@@ -23,4 +23,4 @@ client.on('message', m => {
   sbp.on("exit", (code) => console.log('sbp: exited code '+code));
 });
 client.on('ready',() => console.log('ready'))
-client.login('とけん、ひあｗｗｗｗｗｗｗｗ');
+client.login(process.env.token); //token入れないと死にます
