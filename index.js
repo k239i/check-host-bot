@@ -45,5 +45,5 @@ function getip(host){
         resolve(ip);
       }
     )
-  }
-});
+  })
+};
