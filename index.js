@@ -11,7 +11,7 @@ client.on('message', m => {
   if(!m.content.match(/https?:\/\//)) host = {
     hostname: _url
   };
-  const sbp = cp.fork(__dirname+'/get_ip.js', null, { stdio: [0, 1, 2, 'ipc'] });
+  const sbp = cp.fork(__dirname+'/get_ip.js', [], { stdio: 'inherit' });
   sbp.send(host);
   console.log(sbp)
   sbp.stdout.on("data", (data) => {
