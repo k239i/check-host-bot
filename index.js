@@ -20,7 +20,13 @@ client.on('message', m => {
   sbp.on('message', message => {
     m.reply('CheckHost '+message, {code: true})
   })
-  sbp.on("exit", (code) => console.log('sbp: exited code '+code));
+  sbp.on("exit", (code) => {
+    if(code === 1){
+      console.log('sbp: exited code '+code);
+    }else{
+      m.reply('?')
+    };
+  });
 });
 client.on('ready',() => console.log('ready'))
 client.login(process.env.token); //token入れないと死にます
