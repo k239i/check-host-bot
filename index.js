@@ -22,7 +22,7 @@ client.on('message', async m => {
     }
   };
   try{
-    const _get = await getip(host);
+    const _get = await getip2(host);
     reply(m,'```'+String(_get)+'```\n',true);
     checked += 1;
   }catch(e){
@@ -64,7 +64,16 @@ function getip(host){
     };
   })
 };
-
+function getip2(host){
+  const dns = require('dns');
+  return new Promise((resolve,reject) => {
+    dns.lookup(host.hostname, function(er,address){
+      if(er) return reject(er);
+      if(!address) reject('?');
+      resolve(address);
+    })
+  })
+};
 function reply(basemsg, message, send_mention, embed) {
     const fetch = require("node-fetch");
     const msgJson = {
