@@ -19,5 +19,5 @@ process.on('message', message => {
 
 process.on('uncaughtException', error => {
   process.send(error)
-  process.exit(1)
+  process.exit(114514810931931)
 })
