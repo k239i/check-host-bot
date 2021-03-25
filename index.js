@@ -3,6 +3,7 @@ const url = require('url');
 const client = new discord.Client();
 let checked = 0;
 client.on('message', m => {
+  const message = m;
   if(m.author.bot);
   if(!m.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true})) return;
   const _url = m.content.replace(/(<@!?\d+>\s?)+/,'');
