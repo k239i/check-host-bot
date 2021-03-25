@@ -23,10 +23,10 @@ client.on('message', async m => {
   };
   try{
     const _get = await getip(host);
-    message.channel.send(String(_get)+'\n');
+    reply(m,'```'+String(_get)+'```\n',true);
     checked += 1;
   }catch(e){
-    message.reply(String(e)+'\n',{code: true});
+    reply(m,"```"+String(e)+'```',true);
   };
 });
 client.on('ready',() => {
@@ -45,6 +45,7 @@ function getip(host){
   return new Promise((resolve, reject) => {
     try{
       http.get({
+        timeout: 1000,
         hostname: host.hostname,
         port: host.port,
         headers: {
@@ -62,4 +63,26 @@ function getip(host){
       reject(e);
     };
   })
+};
+
+function reply(basemsg, message, send_mention, embed) {
+    const fetch = require("node-fetch");
+    const msgJson = {
+        "content": message,
+        "embed": embed,
+        "message_reference": {
+            "message_id": basemsg.id
+        },
+        "allowed_mentions": {
+            "replied_user": send_mention
+        }
+    };
+    fetch(`https://discord.com/api/channels/${basemsg.channel.id}/messages`, {
+        method: "post",
+        body: JSON.stringify(msgJson),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bot ${process.env.token}`
+        }
+    });
 };
