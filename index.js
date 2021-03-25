@@ -54,12 +54,12 @@ function getip(host){
         function(res){
           var ip = res.socket.remoteAddress;
           resolve(ip);
-          })
+          }).on('error', er => {
+           if(er.code === 'ETIMEDOUT') resolve(er.address)
+           else reject(er);
+          });
         }
-      ).on('error', er => {
-        if(er.code === 'ETIMEDOUT') resolve(er.address)
-        else reject(er);
-      });
+      )
     }catch(e){
       reject(e);
     };
