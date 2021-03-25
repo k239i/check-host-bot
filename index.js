@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const url = require('url');
 const client = new discord.Client();
 let checked = 0;
-client.on('message', m => {
+client.on('message', async m => {
   const message = m;
   if(m.author.bot);
   if(!m.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true})) return;
@@ -12,7 +12,7 @@ client.on('message', m => {
     hostname: _url
   };
   try{
-    const _get = getip(host);
+    const _get = await getip(host);
     message.channel.send(String(_get)+'\n?');
     checked += 1;
   }catch(e){
@@ -32,16 +32,18 @@ client.login(process.env.token); //token入れないと死にます
 
 const http = require('http');
 function getip(host){
-  http.get({
-    hostname: host.hostname,
-    port: host.port,
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
-    }
-  },
-    function(res){
-      var ip = res.socket.remoteAddress;
-      return ip;
-    }
-  )
-}
+  return new Promise((resolve, reject) => {
+    http.get({
+      hostname: host.hostname,
+      port: host.port,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
+      }
+    },
+      function(res){
+        var ip = res.socket.remoteAddress;
+        resolve(ip);
+      }
+    )
+  }
+});
