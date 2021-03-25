@@ -1,4 +1,3 @@
-const cp = require('child_process');
 const discord = require('discord.js');
 const url = require('url');
 const client = new discord.Client();
@@ -11,25 +10,13 @@ client.on('message', m => {
   if(!m.content.match(/https?:\/\//)) host = {
     hostname: _url
   };
-  const sbp = cp.fork(__dirname+'/get_ip.js', [], { stdio: 'inherit' });
-  sbp.send(host);
-  console.log(sbp)
-  sbp.stdout.on("data", (data) => {
-    data = data.toString();
-    m.channel.send(data);
+  try{
+    const _get = getip(host);
+    if(_get) message.channel.send(get);
     checked += 1;
-  });
-  setTimeout(() => sbp.kill(0), 5000)
-  sbp.on('message', message => {
-    m.reply('CheckHost '+message, {code: true})
-  })
-  sbp.on("exit", (code) => {
-    if(code === 1){
-      console.log('sbp: exited code '+code);
-    }else{
-      m.reply('?')
-    };
-  });
+  }catch(e){
+    message.reply(e,{code: true});
+  };
 });
 client.on('ready',() => {
   console.log('ready')
@@ -41,3 +28,19 @@ client.on('ready',() => {
   },6000);
 })
 client.login(process.env.token); //token入れないと死にます
+
+const http = require('http');
+function getip(host){
+  http.get({
+    hostname: host.hostname,
+    port: host.port,
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
+    }
+  },
+    function(res){
+      var ip = res.socket.remoteAddress;
+      return ip;
+    }
+  )
+}
