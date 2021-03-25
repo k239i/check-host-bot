@@ -12,10 +12,10 @@ client.on('message', m => {
   };
   try{
     const _get = getip(host);
-    if(_get) message.channel.send(get);
+    if(_get) message.channel.send(String(_get));
     checked += 1;
   }catch(e){
-    message.reply(e,{code: true});
+    message.reply(String(e),{code: true});
   };
 });
 client.on('ready',() => {
