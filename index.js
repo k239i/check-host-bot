@@ -48,7 +48,7 @@ client.on('message', async m => {
 });
 client.on('ready', async() => {
   console.log('ready')
-  setInterval(() => {
+  setInterval(async() => {
     api = await countapi.get('fuckbroccoli.me', 'mannko');
     client.user.setActivity('checked ' + api.value + ' hosts.', { type: 'PLAYING' })
     setTimeout(() => {
