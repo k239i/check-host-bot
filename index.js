@@ -2,6 +2,8 @@ const discord = require('discord.js');
 const url = require('url');
 const client = new discord.Client();
 let checked = 0;
+var api; //変数です殺害しますよ
+const countapi = require('countapi-js');
 client.on('message', async m => {
   const message = m;
   if(m.author.bot) return;
@@ -39,14 +41,16 @@ client.on('message', async m => {
     console.log(_get)
     reply(m, String(_get) ,true);
     checked += 1;
+    countapi.set('fuckbroccoli.me', 'mannko', checked);
   }catch(e){
     reply(m, String(e) ,true);
   };
 });
-client.on('ready',() => {
+client.on('ready', async() => {
   console.log('ready')
   setInterval(() => {
-    client.user.setActivity('checked ' + checked + ' hosts.', { type: 'PLAYING' })
+    api = await countapi.get('fuckbroccoli.me', 'mannko');
+    client.user.setActivity('checked ' + api.value + ' hosts.', { type: 'PLAYING' })
     setTimeout(() => {
       client.user.setActivity('@check-host#5362 https://google.com\n@check-host#5362 bing.com', { type: 'PLAYING' })
     },3000);
