@@ -27,16 +27,13 @@ client.on('message', async m => {
     let _get;
     console.log(JSON.stringify([chal,host,_url],null,2))
     if(chpi){
-      alivecheck(host).catch(e => {
-        throw e;
-      });
       _get = await ping(host);
     }else{
       _get = await getip2(host);
     };
     if(chal){
       _get = await alivecheck(host);
-    }else{
+    }else if(!chpi){
       _get = await getip2(host);
     };
     console.log(_get)
