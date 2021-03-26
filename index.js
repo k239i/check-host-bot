@@ -30,6 +30,7 @@ client.on('message', async m => {
     }else{
       _get = await getip2(host);
     };
+    console.log(_get)
     reply(m, String(_get) ,true);
     checked += 1;
   }catch(e){
