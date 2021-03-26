@@ -24,6 +24,7 @@ client.on('message', async m => {
   };
   try{
     let _get;
+    console.log((chal,host,_url))
     if(chal){
       _get = await alivecheck(host);
     }else{
