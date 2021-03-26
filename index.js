@@ -27,8 +27,7 @@ client.on('message', async m => {
   };
   try{
     let _get;
-    checked += 1;
-    countapi.set('fuckbroccoli.me', 'mannko', checked);
+    countapi.update('fuckbroccoli.me', 'mannko', 1);
     console.log(JSON.stringify([chal,host,_url],null,2))
     if(chpi){
       _get = await ping(host);
@@ -50,9 +49,8 @@ client.on('ready', async() => {
   console.log('ready')
   setInterval(async() => {
     api = await countapi.get('fuckbroccoli.me', 'mannko');
-    console.log(JSON.stringify([api,checked],null,2))
-    if(!api.value) api = await countapi.set('fuckbroccoli.me', 'mannko', 0);
-    checked = api.value;
+    console.log(JSON.stringify([api],null,2))
+    if(!api.value) api = await countapi.update('fuckbroccoli.me', 'mannko', 0);
     client.user.setActivity('checked ' + api.value + ' hosts.', { type: 'PLAYING' })
     setTimeout(() => {
       client.user.setActivity('@check-host#5362 https://google.com\n@check-host#5362 bing.com', { type: 'PLAYING' })
