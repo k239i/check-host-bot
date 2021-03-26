@@ -52,10 +52,9 @@ function alivecheck(host){
   return new Promise((resolve, reject) => {
     try{
       http.request({
-        timeout: 1000,
+        timeout: 3000,
         hostname: host.hostname,
         port: host.port,
-        agent: false,
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
         }
