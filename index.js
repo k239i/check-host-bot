@@ -7,7 +7,8 @@ client.on('message', async m => {
   if(m.author.bot) return;
   if(!m.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true})) return;
   var chal = !!(m.content.match('-ch_al'));
-  var _url = m.content.replace(/(<@!?\d+>\s?(\s?-ch_al)?(\s+)?)/,'');
+  var chpi = !!(m.content.match('-ch_pi'));
+  var _url = m.content.replace(/(<@!?\d+>\s?(\s?-ch_al|\s?-ch_pi)?(\s+)?)/,'');
   var host = new url.parse(_url);
   if(!m.content.match(/https?:\/\//)){
     var vaa = _url.split(':');
@@ -25,6 +26,14 @@ client.on('message', async m => {
   try{
     let _get;
     console.log(JSON.stringify([chal,host,_url],null,2))
+    if(chpi){
+      alivecheck(host).catch(e => {
+        throw e;
+      });
+      _get = await ping(host);
+    }else{
+      _get = await getip2(host);
+    };
     if(chal){
       _get = await alivecheck(host);
     }else{
@@ -83,6 +92,35 @@ function getip2(host){
       if(!address) reject('?');
       resolve(address);
     })
+  })
+};
+function ping(host){
+  let ahokusa = 0;
+  return new Promise((resolve, reject) => {
+    setInterval(() => {
+      ahokusa += 1;
+    });
+    setTimeout(() => {
+      reject('timeouted!');
+    },10 * 1000);
+    try{
+      http.get({
+        hostname: host.hostname,
+        port: host.port,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
+        }
+      },
+        function(res){
+        if(res.statusCode >= 500 && res.statusCode <= 599) return resolve(':thinking: 503');
+          resolve('pong! '+ahokusa+'ms')
+        }).on('error', er => {
+         if(er.code === 'ETIMEDOUT') resolve('pong! '+ahokusa+'ms')
+          else reject(er);
+        });
+    }catch(e){
+      reject(e);
+    };
   })
 };
 function reply(basemsg, message, send_mention, embed) {
