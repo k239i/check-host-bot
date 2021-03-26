@@ -4,7 +4,7 @@ const client = new discord.Client();
 let checked = 0;
 client.on('message', async m => {
   const message = m;
-  if(m.author.bot);
+  if(m.author.bot) return;
   if(!m.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true})) return;
   var chal = !!(m.content.match('-ch_al'));
   var _url = m.content.replace(/(<@!?\d+>\s?(\s?-ch_al)?(\s+)?)/,'');
