@@ -5,9 +5,9 @@
     "discord.js": "^12.5.1",
     "ws": "^7.4.4",
     "node-fetch": "^2.6.1",
-    "countapi-js": "~1.0.1"
+    "countapi-js": "^1.0.2"
   },
-  "engines":{
+  "engines": {
     "node": "14.x"
   }
 }

@@ -2,8 +2,8 @@ const discord = require('discord.js');
 const url = require('url');
 const client = new discord.Client();
 let checked = 0;
-var api; //変数です殺害しますよ
-const countapi = require('countapi-js');
+var api; //変数でーすバーカ
+const countapi = require('countapi-js'); // おーれーのーかーちー！！！！！ｗｗｗｗ
 client.on('message', async m => {
   const message = m;
   if(m.author.bot) return;
