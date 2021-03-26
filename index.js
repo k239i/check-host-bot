@@ -51,6 +51,9 @@ client.login(process.env.token); //token入れないと死にます
 const http = require('http');
 function alivecheck(host){
   return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('The site is dead...(timeout)');
+    },3000);
     try{
       http.get({
         timeout: 3000,
