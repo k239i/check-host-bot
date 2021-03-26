@@ -25,7 +25,7 @@ client.on('message', async m => {
   try{
     let _get;
     if(chal){
-      _get await alivecheck(host);
+      _get = await alivecheck(host);
     }else{
       _get = await getip2(host);
     };
