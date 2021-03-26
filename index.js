@@ -52,7 +52,7 @@ const http = require('http');
 function alivecheck(host){
   return new Promise((resolve, reject) => {
     try{
-      http.request({
+      http.get({
         timeout: 3000,
         hostname: host.hostname,
         port: host.port,
