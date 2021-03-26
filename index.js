@@ -8,7 +8,7 @@ client.on('message', async m => {
   if(!m.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true})) return;
   var chal = !!(m.content.match('-ch_al'));
   var chpi = !!(m.content.match('-ch_pi'));
-  var _url = m.content.replace(/(<@!?\d+>\s?(\s?-ch_al\s?|\s?-ch_pi\s?)+?(\s+)?)/,'');
+  var _url = m.content.replace(/(<@!?\d+>\s?((\s?-ch_al\s?|\s?-ch_pi\s?)+)?(\s+)?)/,'');
   var host = new url.parse(_url);
   if(!m.content.match(/https?:\/\//)){
     var vaa = _url.split(':');
