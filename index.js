@@ -27,6 +27,8 @@ client.on('message', async m => {
   };
   try{
     let _get;
+    checked += 1;
+    countapi.set('fuckbroccoli.me', 'mannko', checked);
     console.log(JSON.stringify([chal,host,_url],null,2))
     if(chpi){
       _get = await ping(host);
@@ -40,8 +42,6 @@ client.on('message', async m => {
     };
     console.log(_get)
     reply(m, String(_get) ,true);
-    checked += 1;
-    countapi.set('fuckbroccoli.me', 'mannko', checked);
   }catch(e){
     reply(m, String(e) ,true);
   };
