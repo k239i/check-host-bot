@@ -6,7 +6,8 @@ client.on('message', async m => {
   const message = m;
   if(m.author.bot);
   if(!m.mentions.has(client.user, { ignoreEveryone: true, ignoreRoles: true})) return;
-  var _url = m.content.replace(/(<@!?\d+>\s?)+/,'');
+  var chal = !!(m.content.match('-ch_al'));
+  var _url = m.content.replace(/(<@!?\d+>\s?(\s?-ch_al)?(\s+)?)/,'');
   var host = new url.parse(_url);
   if(!m.content.match(/https?:\/\//)){
     var vaa = _url.split(':');
@@ -17,12 +18,17 @@ client.on('message', async m => {
       }
     }else{
       host = {
-        hostname: _url,
+        hostname: _url
       }
     }
   };
   try{
-    const _get = await getip2(host);
+    let _get;
+    if(chal){
+      _get await alivecheck(host);
+    }else{
+      _get = await getip2(host);
+    };
     reply(m, String(_get) ,true);
     checked += 1;
   }catch(e){
@@ -41,22 +47,23 @@ client.on('ready',() => {
 client.login(process.env.token); //token入れないと死にます
 
 const http = require('http');
-function getip(host){
+function alivecheck(host){
   return new Promise((resolve, reject) => {
     try{
-      http.get({
+      http.request({
         timeout: 1000,
         hostname: host.hostname,
         port: host.port,
+        agent: false,
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
         }
       },
         function(res){
-          var ip = res.socket.remoteAddress;
-          resolve(ip);
+        if(res.statusCode >= 500 && res.statusCode <= 599) return resolve('The site is dead...\n');
+          resolve('The site is still alive...\n')
         }).on('error', er => {
-         if(er.code === 'ETIMEDOUT') resolve(er.address)
+         if(er.code === 'ETIMEDOUT') resolve('The site is dead...\n')
           else reject(er);
         });
     }catch(e){
