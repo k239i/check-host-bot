@@ -51,7 +51,8 @@ client.on('ready', async() => {
   setInterval(async() => {
     api = await countapi.get('fuckbroccoli.me', 'mannko');
     console.log(JSON.stringify([api,checked],null,2))
-    if(!api.value) api = { value: 0 };
+    if(!api.value) api = await countapi.set('fuckbroccoli.me', 'mannko', 0);
+    checked = api.value;
     client.user.setActivity('checked ' + api.value + ' hosts.', { type: 'PLAYING' })
     setTimeout(() => {
       client.user.setActivity('@check-host#5362 https://google.com\n@check-host#5362 bing.com', { type: 'PLAYING' })
