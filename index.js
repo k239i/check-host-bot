@@ -23,10 +23,10 @@ client.on('message', async m => {
   };
   try{
     const _get = await getip2(host);
-    reply(m,'```'+String(_get)+'```\n',true);
+    reply(m, String(_get) ,true);
     checked += 1;
   }catch(e){
-    reply(m,"```"+String(e)+'```',true);
+    reply(m, String(e) ,true);
   };
 });
 client.on('ready',() => {
