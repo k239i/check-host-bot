@@ -75,10 +75,10 @@ function alivecheck(host){
         }
       },
         function(res){
-        if(res.statusCode >= 500 && res.statusCode <= 599) return resolve('The site is dead...\n');
-          resolve('The site is still alive...\n')
+        if(res.statusCode >= 500 && res.statusCode <= 599) return resolve('The site is dead...\nstatus: '+res.statusCode);
+          resolve('The site is still alive...\nstatus: '+res.statusCode)
         }).on('error', er => {
-         if(er.code === 'ETIMEDOUT') resolve('The site is dead...\n')
+         if(er.code === 'ETIMEDOUT') resolve('The site is dead...\nstatus: '+res.statusCode)
           else reject(er);
         });
     }catch(e){
