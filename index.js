@@ -91,7 +91,7 @@ function getip2(host){
   return new Promise((resolve,reject) => {
     dns.lookup(host.hostname, function(er,address){
       if(er) return reject(er);
-      if(!address) reject('?');
+      if(!address) reject('ｳﾜｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱｱ(シンジ)');
       resolve(address);
     })
   })
